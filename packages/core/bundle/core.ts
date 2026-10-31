@@ -24,7 +24,6 @@ export * from "../components/IconButton";
 export { InlineTextField } from "../components/InlineTextField";
 export { Puck } from "../components/Puck";
 export * from "../components/Render";
-export { RichTextMenu } from "../components/RichTextMenu/inner";
 
 export * from "../lib/migrate";
 export * from "../lib/transform-props";

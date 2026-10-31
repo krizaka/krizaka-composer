@@ -12,12 +12,9 @@ import { DropZoneProps } from "../../../components/DropZone/types";
 
 import { useFieldTransforms } from "../../field-transforms/use-field-transforms";
 import { getSlotTransform } from "../../field-transforms/default-transforms/slot-transform";
-import { useRichtextProps } from "../../../components/RichTextEditor/lib/use-richtext-props";
-
-const EMPTY_FIELD_CONFIG = {} as const;
 
 /**
- * Returns the transformed props for a component to use in rendered pages, applying all relevant field transforms (slots, richtext, etc.).
+ * Returns the transformed props for a component to use in rendered pages, applying all relevant field transforms (slots, inline text, etc.).
  *
  * @param config The Puck config used to build the item.
  * @param component The component or root data to resolve props for as it comes from the JSON data.
@@ -43,21 +40,7 @@ function useRenderProps<
     true
   );
 
-  const isRoot = !("type" in component) || component.type === "root";
-
-  const componentFields = isRoot
-    ? config.root?.fields
-    : config.components[component.type]?.fields || EMPTY_FIELD_CONFIG;
-
-  // Convert richtext fields to ReactNodes
-  const richtextProps = useRichtextProps(
-    componentFields,
-    transformedProps,
-    fieldTransforms
-  );
-
-  // Merge the transformed props with the richtext props and return
-  return { ...transformedProps, ...richtextProps };
+  return transformedProps;
 }
 
 export default useRenderProps;

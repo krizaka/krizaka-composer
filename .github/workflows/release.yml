@@ -1,0 +1,29 @@
+# .github/workflows/release.yml (krizaka-composer): changesets opens « chore: version packages »; its merge publishes
+# @krizaka/composer to npm with provenance (trusted publishing by OIDC, the npm trust is set by an owner:
+# `npm trust github @krizaka/composer --repository krizaka/krizaka-composer --file release.yml`).
+name: Release
+on: { push: { branches: [main] }, workflow_dispatch: {} }
+permissions: { contents: read } # write scopes live on the job (OpenSSF Scorecard, Token-Permissions)
+concurrency: { group: release, cancel-in-progress: false }
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions: { contents: write, pull-requests: write, id-token: write }
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with: { fetch-depth: 0, persist-credentials: false }
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with: { node-version: 24, cache: pnpm, registry-url: https://registry.npmjs.org }
+      - run: npm install -g --ignore-scripts npm@11.6.2 # trusted publishing (OIDC) needs npm >= 11.5.1
+      - run: pnpm install --frozen-lockfile
+      - id: changesets
+        uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2
+        with:
+          version-script: pnpm run version
+          publish-script: pnpm run release
+          pr-title: "chore: version packages"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          NPM_CONFIG_PROVENANCE: "true"

@@ -13,7 +13,6 @@ import { ComponentData, FieldTransforms } from "../../../types";
 import { useFieldTransformsTracked } from "../../field-transforms/use-field-transforms-tracked";
 
 import { getInlineTextTransform } from "../../field-transforms/default-transforms/inline-text-transform";
-import { getRichTextTransform } from "../../field-transforms/default-transforms/rich-text-transform";
 import { getSlotTransform } from "../../field-transforms/default-transforms/slot-transform";
 
 export type UseEditorPropsOptions = {
@@ -47,7 +46,6 @@ const useEditorProps = ({
         <ContextSlotRender componentId={componentId} zone={slotProps.zone} />
       )),
       ...getInlineTextTransform(),
-      ...getRichTextTransform(),
       ...plugins.reduce<FieldTransforms>((acc, plugin) => {
         if (!plugin.fieldTransforms) return acc;
 

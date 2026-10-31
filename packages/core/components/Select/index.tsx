@@ -49,7 +49,7 @@ export const Select = ({
   disabled?: boolean;
 }) => {
   const [open, setOpen] = useState(false);
-  const selectLabel = useMessage("field-richtext-select");
+  const selectLabel = useMessage("field-select");
 
   const hasOptions = options.length > 0;
   const isDisabled = disabled || !hasOptions;

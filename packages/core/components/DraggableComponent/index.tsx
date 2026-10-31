@@ -38,7 +38,6 @@ import { ActionBar } from "../ActionBar";
 import { dropZoneContext, DropZoneProvider } from "../DropZone";
 import { DropZoneContext, ZoneStoreContext } from "../DropZone/context";
 import { useDropAnimation } from "../DragDropContext/use-drop-animation";
-import { LoadedRichTextMenu } from "../RichTextMenu";
 
 import { useDragHandle } from "../../lib/dnd/drag-handle";
 import styles from "./styles.module.css";
@@ -784,10 +783,6 @@ export const DraggableComponent = ({
     ]
   );
 
-  const richText = useAppStore((s) =>
-    s.currentRichText?.inlineComponentId === id ? s.currentRichText : null
-  );
-
   const hasNormalActions = permissions.duplicate || permissions.delete;
 
   return (
@@ -841,18 +836,6 @@ export const DraggableComponent = ({
                   dragHandle={dragHandle}
                   dragHandleRef={dragHandleRef}
                 >
-                  {richText && (
-                    <>
-                      <LoadedRichTextMenu
-                        editor={richText.editor}
-                        field={richText.field}
-                        inline
-                        readOnly={false}
-                      />
-                      {hasNormalActions && <ActionBar.Separator />}
-                    </>
-                  )}
-
                   {permissions.duplicate && (
                     <ActionBar.Action
                       onClick={onDuplicate}

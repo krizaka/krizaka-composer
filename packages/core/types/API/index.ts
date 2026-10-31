@@ -93,8 +93,6 @@ export type WithSlotProps<
   SlotType extends Content<Components> = Content<Components>
 > = WithDeepSlots<Target, SlotType>;
 
-export type RichText = string | ReactNode;
-
 export * from "./DropZone";
 export * from "./Viewports";
 

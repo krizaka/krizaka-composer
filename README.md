@@ -7,126 +7,56 @@ published on npm as `@krizaka/composer` (MIT). It keeps Puck's canvas, drag and 
 changes what the products need: a versioned document validated with zod, nested blocks, content per locale, variables
 and bindings; an editor in French and English; Krizaka's tokens and `@krizaka/ui` controls, keyboard and accessibility.
 
-|              |                                                                                                                                                              |
-| :----------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Status       | **Fork set up, not published yet**: the first `@krizaka/composer` release follows the schema change. Until then the packages below still carry Puck's names. |
-| Upstream     | `puckeditor/puck`, tracked as the `upstream` remote: security and bug fixes are cherry-picked, generic fixes are proposed back from this fork.               |
-| Licence      | MIT. Puck's [LICENSE](LICENSE) is kept unchanged; see [NOTICE](NOTICE).                                                                                      |
-| Used by      | [Akinaza](https://github.com/krizaka/akinaza)'s shop editor (Boutique › Page).                                                                               |
-| Contributing | [AGENTS.md](AGENTS.md) and [docs/agents.md](docs/agents.md); the org's standards in [krizaka/.github](https://github.com/krizaka/.github).                   |
+|              |                                                                                                                                                |
+| :----------- | :--------------------------------------------------------------------------------------------------------------------------------------------- |
+| Package      | `@krizaka/composer` on npm (MIT), released with changesets and npm provenance; the editor is `packages/core`.                                  |
+| Document     | `@krizaka/composer/document`: the versioned `ComposerDocument` (schema 2), validated with zod, no React, runs on a server.                     |
+| Upstream     | `puckeditor/puck`, tracked as the `upstream` remote: security and bug fixes are cherry-picked, generic fixes are proposed back from this fork. |
+| Licence      | MIT. Puck's [LICENSE](LICENSE) is kept unchanged; see [NOTICE](NOTICE).                                                                        |
+| Used by      | [Akinaza](https://github.com/krizaka/akinaza)'s shop editor (Boutique › Page).                                                                 |
+| Contributing | [AGENTS.md](AGENTS.md) and [docs/agents.md](docs/agents.md); the org's standards in [krizaka/.github](https://github.com/krizaka/.github).     |
 
----
+## The document
 
-_Puck's original README follows, unchanged until the packages are renamed._
+A page is JSON: `{ schema: 2, locales, defaultLocale, root: { props }, blocks }`. A block is `{ id, type, props, slots }`;
+`slots` hold nested blocks. A prop is text, a number, a boolean, a list of options, words per locale (`{ en, fr }`), a
+variable (`{ var }`) or a binding (`{ bind }`) the host resolves, or an asset in the host's storage (`{ asset, poster? }`).
+There is no markup and no code in a document: text holding a tag or a script address, an event-handler or `style` prop,
+and `__proto__` keys are refused.
 
-<br /><br /><br />
+```ts
+import {
+  defineBlocks,
+  validateDocument,
+  readDocument,
+} from "@krizaka/composer/document";
 
-<div align="center">
-
-<a href="https://puckeditor.com?utm_source=readme&utm_medium=code&utm_campaign=repo&utm_contents=logo">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://res.cloudinary.com/die3nptcg/image/upload/Puck_Logo_White_RGB_j2rwgg.svg" height="100px" aria-label="Puck logo">
-    <img src="https://res.cloudinary.com/die3nptcg/image/upload/Puck_Logo_Black_RGB_dqsjag.svg" height="100px" aria-label="Puck logo">
-  </picture>
-</a>
-
-_The visual editor for React_
-
-[Documentation](https://puckeditor.com/docs?utm_source=readme&utm_medium=code&utm_campaign=repo&utm_contents=docs_link) • [Demo](https://demo.puckeditor.com/edit?utm_source=readme&utm_medium=code&utm_campaign=repo&utm_contents=demo_link) • [Discord](https://discord.gg/V9mDAhuxyZ) • [Contributing](https://github.com/puckeditor/puck/blob/main/CONTRIBUTING.md)
-
-⭐️ Enjoying Puck? Please [leave a star](https://github.com/puckeditor/puck)!
-
-<br />
-
-[![GIF showing a page being created in the Puck Editor, with components being added, arranged, and customized in real time](https://github.com/user-attachments/assets/25e1ae25-ca5e-450f-afa0-01816830b731)](https://demo.puckeditor.com/edit)
-
-</div>
-
-## What is Puck?
-
-Puck is a modular, open-source visual editor for React.js. You can use Puck to build custom drag-and-drop experiences with your own application and React components.
-
-Because Puck is just a React component, it plays well with all React.js environments, including Next.js. You own your data and there’s no vendor lock-in.
-
-Puck is also [licensed under MIT](https://github.com/puckeditor/puck?tab=MIT-1-ov-file#readme), making it suitable for both internal systems and commercial applications.
-
-## Quick start
-
-Install the package:
-
-```sh
-npm i @puckeditor/core --save # or npx create-puck-app my-app
-```
-
-Render the editor:
-
-```jsx
-// Editor.jsx
-import { Puck } from "@puckeditor/core";
-
-// Create Puck component config
-const config = {
-  components: {
-    HeadingBlock: {
+const registry = defineBlocks({
+  blocks: {
+    model: {
       fields: {
-        children: {
-          type: "text",
+        src: {
+          type: "asset",
+          accept: ["model/gltf-binary"],
+          poster: { accept: ["image/*"] },
         },
-      },
-      render: ({ children }) => {
-        return <h1>{children}</h1>;
       },
     },
   },
-};
+});
 
-// Describe the initial data
-const initialData = {};
-
-// Save the data to your database
-const save = (data) => {};
-
-// Render Puck editor
-export function Editor() {
-  return <Puck config={config} data={initialData} onPublish={save} />;
-}
+// On a server, before storing: every issue with its path and a stable code, never a throw.
+const result = validateDocument(body, {
+  registry,
+  assets: { mimeOf: (id) => storage.mimeOf(id) },
+});
+// An older stored document (the shop page, schema 1) is read once: migrate, then parse.
+const stored = readDocument(row.document);
 ```
 
-Render the page:
+Field types are closed: `text`, `localized`, `enum`, `number` (min, max, step, unit), `boolean`, `asset` (MIME allow-list)
+and `slot` (allowed types, count, depth). Versions are migrated by pure functions (`migrateDocument`); a newer document
+than the code knows is refused. Puck's saved data is read once with `fromPuckData` and never written.
 
-```jsx
-// Page.jsx
-import { Render } from "@puckeditor/core";
-
-export function Page() {
-  return <Render config={config} data={data} />;
-}
-```
-
-## Recipes
-
-Use `create-puck-app` to quickly spin up a a pre-configured app based on our provided [recipes](https://github.com/puckeditor/puck/tree/main/recipes):
-
-```sh
-npx create-puck-app my-app
-```
-
-Available recipes include:
-
-- [**next**](https://github.com/puckeditor/puck/tree/main/recipes/next): Next.js example, using App Router and static page generation
-- [**react-router**](https://github.com/puckeditor/puck/tree/main/recipes/react-router): React Router v7 app example, using dynamic routes to create pages at any level
-
-## Community
-
-- [Discord server](https://discord.gg/D9e4E3MQVZ) for discussions
-- [awesome-puck](https://github.com/puckeditor/awesome-puck) community repo for plugins, custom fields & more
-
-## Get support
-
-If you have any questions about Puck, please open a [GitHub issue](https://github.com/puckeditor/puck/issues) or join us on [Discord](https://discord.gg/D9e4E3MQVZ).
-
-Or [book a discovery call](https://app.cal.com/chrisvxd/puck-enquiry/) for hands-on support and consultancy.
-
-## License
-
-MIT © [The Puck Contributors](https://github.com/puckeditor/puck/graphs/contributors)
+Dropped from the upstream fork: rich text (TipTap), external fields, `create-puck-app`, the Contentful and emotion
+plugins, the heading analyzer, the demo and docs apps and the recipes.

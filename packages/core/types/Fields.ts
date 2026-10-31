@@ -1,11 +1,5 @@
 import { CSSProperties, ReactElement, ReactNode } from "react";
 import { DefaultComponentProps, FieldMetadata, UiState } from ".";
-import type { Editor, Extensions } from "@tiptap/react";
-import {
-  EditorState,
-  RichTextSelector,
-} from "../components/RichTextEditor/types";
-import { PuckRichTextOptions } from "../components/RichTextEditor/extension";
 
 export type FieldGroupVariant = "flush" | "card";
 
@@ -58,31 +52,6 @@ export interface CheckboxField extends BaseField {
   options: FieldOptions;
 }
 
-export interface RichtextField<
-  UserSelector extends RichTextSelector = RichTextSelector
-> extends BaseField {
-  type: "richtext";
-  contentEditable?: boolean;
-  initialHeight?: CSSProperties["height"];
-  options?: Partial<PuckRichTextOptions>;
-  renderMenu?: (props: {
-    children: ReactNode;
-    editor: Editor | null;
-    editorState: EditorState<UserSelector> | null;
-    readOnly: boolean;
-  }) => ReactNode;
-  renderInlineMenu?: (props: {
-    children: ReactNode;
-    editor: Editor | null;
-    editorState: EditorState<UserSelector> | null;
-    readOnly: boolean;
-  }) => ReactNode;
-  tiptap?: {
-    selector?: UserSelector;
-    extensions?: Extensions;
-  };
-}
-
 export interface ArrayField<
   Props extends { [key: string]: any }[] = { [key: string]: any }[],
   UserField extends {} = {}
@@ -114,53 +83,6 @@ export interface ObjectField<
   };
 }
 
-// DEPRECATED
-export type Adaptor<
-  AdaptorParams = {},
-  TableShape extends Record<string, any> = {},
-  PropShape = TableShape
-> = {
-  name: string;
-  fetchList: (adaptorParams?: AdaptorParams) => Promise<TableShape[] | null>;
-  mapProp?: (value: TableShape) => PropShape;
-};
-
-type NotUndefined<T> = T extends undefined ? never : T;
-
-// DEPRECATED
-export type ExternalFieldWithAdaptor<
-  Props extends any = { [key: string]: any }
-> = BaseField & {
-  type: "external";
-  placeholder?: string;
-  adaptor: Adaptor<any, any, Props>;
-  adaptorParams?: object;
-  getItemSummary: (item: NotUndefined<Props>, index?: number) => ReactNode;
-};
-
-export type CacheOpts = {
-  enabled?: boolean;
-};
-
-export interface ExternalField<Props extends any = { [key: string]: any }>
-  extends BaseField {
-  type: "external";
-  cache?: CacheOpts;
-  placeholder?: string;
-  fetchList: (params: {
-    query: string;
-    filters: Record<string, any>;
-  }) => Promise<any[] | null>;
-  mapProp?: (value: any) => Props;
-  mapRow?: (value: any) => Record<string, string | number | ReactElement>;
-  getItemSummary?: (item: NotUndefined<Props>, index?: number) => ReactNode;
-  showSearch?: boolean;
-  renderFooter?: (props: { items: any[] }) => ReactElement;
-  initialQuery?: string;
-  filterFields?: Record<string, Field>;
-  initialFilters?: Record<string, any>;
-}
-
 export type CustomFieldRender<Value extends any> = (props: {
   field: CustomField<Value>;
   name: string;
@@ -185,7 +107,6 @@ export interface SlotField extends BaseField {
 
 export type Field<ValueType = any, UserField extends {} = {}> =
   | TextField
-  | RichtextField
   | NumberField
   | TextareaField
   | SelectField
@@ -196,8 +117,6 @@ export type Field<ValueType = any, UserField extends {} = {}> =
       UserField
     >
   | ObjectField<ValueType, UserField>
-  | ExternalField<ValueType>
-  | ExternalFieldWithAdaptor<ValueType>
   | CustomField<ValueType>
   | SlotField;
 

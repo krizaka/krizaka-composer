@@ -19,11 +19,11 @@ The Krizaka fork of Puck (akinaza ADR-010, amended 2026-10-31). Read this before
 ## Plan (krizaka-internal#1889)
 
 1. C0 — the fork set up (this state): CI on the org's reusable workflows, protection, registry. Nothing published.
-2. C1 — `packages/core` becomes `@krizaka/composer`; the `ComposerDocument` schema; the drops; first npm release.
+2. C1 (this state) — `packages/core` is `@krizaka/composer`; the `ComposerDocument` schema in `/document`; the drops; first npm release by changesets (`.github/workflows/release.yml`).
 3. C2 — the editor's words in French and English (`@krizaka/i18n`).
 4. C3 — ergonomics: Krizaka tokens, `@krizaka/ui` controls, keyboard, accessibility.
 
 ## Not here
 
-- No npm publish before C1; upstream's publish workflows were removed.
+- Publishing is the changesets release workflow only (provenance, trusted publishing); upstream's publish workflows were removed.
 - No product code: the shop catalogue and its block config live in their own repositories.

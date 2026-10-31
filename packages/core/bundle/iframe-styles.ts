@@ -13,8 +13,6 @@ import "../components/Drawer/styles.module.css";
 import "../components/DropZone/styles.module.css";
 import "../components/InlineTextField/styles.module.css";
 import "../components/Loader/styles.module.css";
-import "../components/RichTextMenu/styles.module.css";
-import "../components/RichTextMenu/components/Control/styles.module.css";
 
 // Global CSS
 import "../components/DraggableComponent/styles.css";

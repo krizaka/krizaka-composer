@@ -1,11 +1,15 @@
 {
-  "name": "@puckeditor/core",
-  "version": "0.24.0",
-  "description": "The open-source visual editor for React",
-  "author": "Chris Villa <chris@puckeditor.com>",
-  "repository": "puckeditor/puck",
-  "bugs": "https://github.com/puckeditor/puck/issues",
-  "homepage": "https://puckeditor.com",
+  "name": "@krizaka/composer",
+  "version": "0.1.0",
+  "description": "Krizaka Composer: the visual page editor of the Krizaka family and its document format (a fork of Puck)",
+  "author": "Krizaka",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krizaka/krizaka-composer.git",
+    "directory": "packages/core"
+  },
+  "bugs": "https://github.com/krizaka/krizaka-composer/issues",
+  "homepage": "https://github.com/krizaka/krizaka-composer#readme",
   "keywords": [
     "puck",
     "visual",
@@ -51,9 +55,14 @@
       "require": "./dist/internal.js"
     },
     "./puck.css": "./dist/index.css",
-    "./no-external.css": "./dist/no-external.css",
     "./dist/index.css": "./dist/index.css",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./document": {
+      "types": "./dist/document.d.ts",
+      "import": "./dist/document.mjs",
+      "require": "./dist/document.js"
+    },
+    "./no-external.css": "./dist/no-external.css"
   },
   "typesVersions": {
     "*": {
@@ -68,14 +77,15 @@
   },
   "scripts": {
     "lint": "eslint \"**/*.ts*\"",
-    "build": "rm -rf dist && tsup bundle/index.ts bundle/rsc.tsx bundle/no-external.ts bundle/internal.ts",
+    "build": "rm -rf dist && tsup bundle/index.ts bundle/rsc.tsx bundle/no-external.ts bundle/internal.ts bundle/document.ts",
     "test": "jest",
-    "prepare": "cp ../../README.md ../../CHANGELOG.md . && pnpm build",
-    "postpublish": "rm README.md CHANGELOG.md"
+    "prepare": "cp ../../README.md ../../LICENSE ../../NOTICE . && pnpm build"
   },
   "files": [
     "dist",
-    "CHANGELOG.md"
+    "README.md",
+    "LICENSE",
+    "NOTICE"
   ],
   "devDependencies": {
     "@juggle/resize-observer": "^3.4.0",
@@ -115,36 +125,21 @@
     "@dnd-kit/state": "0.4.0",
     "@radix-ui/react-popover": "^1.1.15",
     "@tanstack/react-virtual": "^3.13.9",
-    "@tiptap/core": "^3.30.4",
-    "@tiptap/extension-blockquote": "^3.30.4",
-    "@tiptap/extension-bold": "^3.30.4",
-    "@tiptap/extension-code": "^3.30.4",
-    "@tiptap/extension-code-block": "^3.30.4",
-    "@tiptap/extension-document": "^3.30.4",
-    "@tiptap/extension-hard-break": "^3.30.4",
-    "@tiptap/extension-heading": "^3.30.4",
-    "@tiptap/extension-horizontal-rule": "^3.30.4",
-    "@tiptap/extension-italic": "^3.30.4",
-    "@tiptap/extension-link": "^3.30.4",
-    "@tiptap/extension-list": "^3.30.4",
-    "@tiptap/extension-paragraph": "^3.30.4",
-    "@tiptap/extension-strike": "^3.30.4",
-    "@tiptap/extension-text": "^3.30.4",
-    "@tiptap/extension-text-align": "^3.30.4",
-    "@tiptap/extension-underline": "^3.30.4",
-    "@tiptap/html": "^3.30.4",
-    "@tiptap/pm": "^3.30.4",
-    "@tiptap/react": "^3.30.4",
+    "classnames": "^2.5.1",
     "deep-diff": "^1.0.2",
     "fast-equals": "5.2.2",
     "flat": "^5.0.2",
-    "happy-dom": "^21.0.4",
     "object-hash": "^3.0.0",
     "react-hotkeys-hook": "^4.6.1",
     "use-debounce": "^9.0.4",
+    "zod": "^4.1.0",
     "zustand": "^5.0.3"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

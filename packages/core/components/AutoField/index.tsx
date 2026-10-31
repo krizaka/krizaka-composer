@@ -14,11 +14,9 @@ import {
   RadioField,
   CheckboxField,
   SelectField,
-  ExternalField,
   ArrayField,
   DefaultField,
   TextareaField,
-  RichtextField,
 } from "./fields";
 import { ObjectField } from "./fields/ObjectField";
 import { useAppStore } from "../../store";
@@ -57,7 +55,6 @@ export { FieldLabel } from "./FieldLabel";
 
 const defaultFields = {
   array: ArrayField,
-  external: ExternalField,
   object: ObjectField,
   select: SelectField,
   textarea: TextareaField,
@@ -65,7 +62,6 @@ const defaultFields = {
   checkbox: CheckboxField,
   text: DefaultField,
   number: DefaultField,
-  richtext: RichtextField,
 };
 
 type AutoFieldInternalProps<
@@ -98,7 +94,6 @@ function AutoFieldInternal<
       ...overrides.fieldTypes,
       custom: overrides.fieldTypes?.custom,
       array: overrides.fieldTypes?.array || defaultFields.array,
-      external: overrides.fieldTypes?.external || defaultFields.external,
       object: overrides.fieldTypes?.object || defaultFields.object,
       select: overrides.fieldTypes?.select || defaultFields.select,
       textarea: overrides.fieldTypes?.textarea || defaultFields.textarea,
@@ -106,7 +101,6 @@ function AutoFieldInternal<
       checkbox: overrides.fieldTypes?.checkbox || defaultFields.checkbox,
       text: overrides.fieldTypes?.text || defaultFields.text,
       number: overrides.fieldTypes?.number || defaultFields.number,
-      richtext: overrides.fieldTypes?.richtext || defaultFields.richtext,
     }),
     [overrides]
   );

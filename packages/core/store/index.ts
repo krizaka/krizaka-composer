@@ -15,7 +15,6 @@ import {
   ComponentData,
   RootDataWithProps,
   ResolveDataTrigger,
-  RichtextField,
 } from "../types";
 import { createReducer, PuckAction } from "../reducer";
 import { getItem } from "../lib/data/get-item";
@@ -38,7 +37,6 @@ import { generateId } from "../lib/generate-id";
 import { defaultAppState } from "./default-app-state";
 import { FieldTransforms } from "../types/API/FieldTransforms";
 import type { Dictionary } from "../lib/dictionary";
-import type { Editor } from "@tiptap/react";
 
 export { defaultAppState };
 
@@ -97,13 +95,6 @@ export type AppStore<
   nodes: NodesSlice;
   permissions: PermissionsSlice;
   fieldTransforms: FieldTransforms;
-  currentRichText?: {
-    inlineComponentId?: string;
-    inline: boolean;
-    field: RichtextField;
-    editor: Editor;
-    id: string;
-  } | null;
 };
 
 const defaultPageFields: Record<string, Field> = {
@@ -362,7 +353,7 @@ export type AppStoreApi = ReturnType<typeof createAppStore>;
 export const appStoreContext = createContext<AppStoreApi | null>(null);
 
 // Fallback store used only when a component reads the store outside of a <Puck> provider (e.g. <Render> for SSR).
-// Created lazily instead of at module scope so that importing @puckeditor/core has no side effects that might
+// Created lazily instead of at module scope so that importing @krizaka/composer has no side effects that might
 // be unsupported in edge runtimes
 let defaultAppStore: AppStoreApi | null = null;
 

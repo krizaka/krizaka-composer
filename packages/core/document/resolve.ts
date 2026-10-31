@@ -86,5 +86,8 @@ export function referencesOf(
     }
   };
   visit(blocks);
-  return { variables: [...variables].sort(), bindings: [...bindings].sort() };
+  return {
+    variables: [...variables].sort((a, b) => a.localeCompare(b)),
+    bindings: [...bindings].sort((a, b) => a.localeCompare(b)),
+  };
 }

@@ -116,15 +116,11 @@ function checkValue(
   }
 }
 
-/** The rules zod cannot say, over a document of the right shape. */
-function checkRules(
+function checkLocales(
   doc: ComposerDocument,
-  limits: DocumentLimits
-): DocumentIssue[] {
-  const issues: DocumentIssue[] = [];
-  const report: Report = (path, code, message) =>
-    issues.push({ path, code, message });
-
+  limits: DocumentLimits,
+  report: Report
+) {
   if (doc.locales.length > limits.maxLocales)
     report("locales", "limit", `at most ${limits.maxLocales} locales`);
   if (new Set(doc.locales).size !== doc.locales.length)
@@ -138,9 +134,13 @@ function checkRules(
   for (const l of doc.locales)
     if (RESERVED_LOCALE_KEYS.has(l))
       report("locales", "locale", `"${l}" is reserved`);
+}
 
-  checkProps(doc.root.props, "root.props", report, doc, limits);
-
+function checkBlocks(
+  doc: ComposerDocument,
+  limits: DocumentLimits,
+  report: Report
+) {
   const seen = new Set<string>();
   let count = 0;
   for (const { block: b, path, depth } of walkBlocks(doc.blocks)) {
@@ -161,6 +161,19 @@ function checkRules(
   }
   if (count > limits.maxBlocks)
     report("blocks", "limit", `at most ${limits.maxBlocks} blocks`);
+}
+
+/** The rules zod cannot say, over a document of the right shape. */
+function checkRules(
+  doc: ComposerDocument,
+  limits: DocumentLimits
+): DocumentIssue[] {
+  const issues: DocumentIssue[] = [];
+  const report: Report = (path, code, message) =>
+    issues.push({ path, code, message });
+  checkLocales(doc, limits, report);
+  checkProps(doc.root.props, "root.props", report, doc, limits);
+  checkBlocks(doc, limits, report);
   return issues;
 }
 

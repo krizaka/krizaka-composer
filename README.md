@@ -1,3 +1,24 @@
+# Krizaka Composer
+
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=krizaka_krizaka-composer&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=krizaka_krizaka-composer) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=krizaka_krizaka-composer&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=krizaka_krizaka-composer) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=krizaka_krizaka-composer&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=krizaka_krizaka-composer) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=krizaka_krizaka-composer&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=krizaka_krizaka-composer) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=krizaka_krizaka-composer&metric=coverage)](https://sonarcloud.io/summary/new_code?id=krizaka_krizaka-composer)
+
+The visual page editor of the Krizaka family: **the Krizaka fork of [Puck](https://github.com/puckeditor/puck)**, to be
+published on npm as `@krizaka/composer` (MIT). It keeps Puck's canvas, drag and drop, outline and phone layout, and
+changes what the products need: a versioned document validated with zod, nested blocks, content per locale, variables
+and bindings; an editor in French and English; Krizaka's tokens and `@krizaka/ui` controls, keyboard and accessibility.
+
+|              |                                                                                                                                                              |
+| :----------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Status       | **Fork set up, not published yet**: the first `@krizaka/composer` release follows the schema change. Until then the packages below still carry Puck's names. |
+| Upstream     | `puckeditor/puck`, tracked as the `upstream` remote: security and bug fixes are cherry-picked, generic fixes are proposed back from this fork.               |
+| Licence      | MIT. Puck's [LICENSE](LICENSE) is kept unchanged; see [NOTICE](NOTICE).                                                                                      |
+| Used by      | [Akinaza](https://github.com/krizaka/akinaza)'s shop editor (Boutique › Page).                                                                               |
+| Contributing | [AGENTS.md](AGENTS.md) and [docs/agents.md](docs/agents.md); the org's standards in [krizaka/.github](https://github.com/krizaka/.github).                   |
+
+---
+
+_Puck's original README follows, unchanged until the packages are renamed._
+
 <br /><br /><br />
 
 <div align="center">

@@ -1,0 +1,12 @@
+Krizaka Composer
+Copyright (c) Krizaka and the Krizaka Composer contributors.
+
+Krizaka Composer is a fork of Puck (https://github.com/puckeditor/puck),
+Copyright (c) The Puck Contributors, distributed under the MIT License.
+The fork started from puckeditor/puck@d14401c3a47947543e9de733ef1a20fb85140d52 (2026-10-31, Puck 0.24.0).
+Puck's LICENSE file is kept unchanged; Krizaka's changes are released under the same MIT License.
+
+What Krizaka changes (akinaza ADR-010, amended 2026-10-31): the data schema (versioned, validated with zod,
+nested blocks, content per locale, variables and bindings), the editor's words (French and English), the
+ergonomics (Krizaka tokens, @krizaka/ui controls, keyboard, accessibility), and the removal of what Krizaka
+does not use. The history of every change is the git history of this repository.

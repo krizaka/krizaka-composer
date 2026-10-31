@@ -1,0 +1,12 @@
+{
+  "allow": [
+    {
+      "path": "lerna.json",
+      "why": "the upstream fork's Lerna configuration, read by its release scripts from the root (docs/agents.md « Upstream »)"
+    },
+    {
+      "path": "recipes",
+      "why": "the upstream fork's installable recipes (next, next-ai, react-router), referenced by its packages and docs at this path"
+    }
+  ]
+}

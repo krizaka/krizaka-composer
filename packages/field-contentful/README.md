@@ -17,7 +17,7 @@ const config = {
       fields: {
         movie: createFieldContentful("movies", {
           space: "my_space",
-          accessToken: "abcdefg123456",
+          accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
         }),
       },
       render: ({ data }) => {

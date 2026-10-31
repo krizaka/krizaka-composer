@@ -1,0 +1,9 @@
+# The fork keeps the upstream history. One upstream commit documents a placeholder Contentful token in a README; it is not a secret.
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Upstream README placeholder, inherited with the fork history"
+commits = ["d94428819a958b4f566e5d0e8cd29b3bf1107881"]
+paths = ['''packages/field-contentful/README\.md''']
+condition = "AND"

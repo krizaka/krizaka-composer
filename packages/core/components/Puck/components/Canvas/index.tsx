@@ -237,6 +237,7 @@ export const Canvas = () => {
 
   return (
     <div
+      role="presentation"
       className={getClassName({
         ready: status === "READY" || !iframe.enabled || !iframe.waitForStyles,
         showLoader,

@@ -225,6 +225,7 @@ function AutoFieldInternal<
       }}
     >
       <div
+        role="presentation"
         className={getClassNameWrapper()}
         data-puck-field-group-collapsible={
           rendersCollapsibleGroup(field, overrides.fieldTypes) || undefined

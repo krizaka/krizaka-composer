@@ -144,14 +144,14 @@ export const createPermissionsSlice = (
       // Resolve specific type
       flattenData(state, config)
         .filter((item) => item.type === type)
-        .map(async (item) => {
+        .forEach(async (item) => {
           await resolvePermissionsForItem(item, force);
         });
     } else if (root) {
       resolvePermissionsForRoot(force);
     } else {
       // Resolve everything
-      flattenData(state, config).map(async (item) => {
+      flattenData(state, config).forEach(async (item) => {
         await resolvePermissionsForItem(item, force);
       });
     }

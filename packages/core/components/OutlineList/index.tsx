@@ -25,7 +25,21 @@ OutlineList.Item = ({
   return (
     <li
       className={getClassNameItem({ clickable: !!onClick })}
+      tabIndex={onClick ? 0 : undefined}
       onClick={onClick}
+      onKeyDown={
+        onClick
+          ? (e) => {
+              if (
+                e.target === e.currentTarget &&
+                (e.key === "Enter" || e.key === " ")
+              ) {
+                e.preventDefault();
+                onClick(e);
+              }
+            }
+          : undefined
+      }
     >
       {children}
     </li>

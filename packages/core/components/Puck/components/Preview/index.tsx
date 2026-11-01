@@ -105,6 +105,7 @@ export const Preview = ({ id = "puck-preview" }: { id?: string }) => {
 
   return (
     <div
+      role="presentation"
       className={getClassName()}
       id={id}
       data-puck-preview

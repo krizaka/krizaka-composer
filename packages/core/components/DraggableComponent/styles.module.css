@@ -57,7 +57,6 @@
   top: var(--puck-space-2);
   right: var(--puck-space-2);
   position: absolute;
-  z-index: 1;
   pointer-events: all;
   box-sizing: border-box;
   opacity: 0.8;

@@ -130,6 +130,19 @@ const ArrayFieldItemInternal = ({
         >
           <div
             ref={handleRef}
+            role="button"
+            tabIndex={0}
+            aria-expanded={hasVisibleFields ? isExpanded : undefined}
+            onKeyDown={(e) => {
+              if (
+                e.target === e.currentTarget &&
+                (e.key === "Enter" || e.key === " ")
+              ) {
+                e.preventDefault();
+                if (isDragging || !hasVisibleFields) return;
+                onToggleExpand(id, isExpanded);
+              }
+            }}
             onClick={(e) => {
               if (isDragging) return;
 

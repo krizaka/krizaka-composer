@@ -33,6 +33,7 @@ export function MenuBar<UserData extends Data>({
 
   return (
     <div
+      role="presentation"
       className={getClassName({ menuOpen })}
       onClick={(event) => {
         const element = event.target as HTMLElement;

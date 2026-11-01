@@ -13,6 +13,7 @@ export const ActionBar = ({
   children?: ReactNode;
 }) => (
   <div
+    role="presentation"
     className={getClassName()}
     onClick={(e) => {
       e.stopPropagation();

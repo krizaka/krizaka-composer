@@ -25,8 +25,13 @@ export const Modal = ({
   }
 
   return createPortal(
-    <div className={getClassName({ isOpen })} onClick={onClose}>
+    <div
+      role="presentation"
+      className={getClassName({ isOpen })}
+      onClick={onClose}
+    >
       <div
+        role="presentation"
         className={getClassName("inner")}
         onClick={(e) => e.stopPropagation()}
       >

@@ -29,7 +29,7 @@ jobs:
       format-script: format:check
       test-script: test
       build-script: build
-      # SonarCloud is switched on once the project krizaka_krizaka-composer exists (krizaka-internal#1904, the CTO).
-      sonar: false
+      # SonarCloud CI analysis: the required "SonarCloud Code Analysis" must also report on merge_group, where the app's automatic analysis does not run (krizaka-internal#1904).
+      sonar: true
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

@@ -18,12 +18,22 @@ jobs:
         with: { node-version: 24, cache: pnpm, registry-url: https://registry.npmjs.org }
       - run: npm install -g --ignore-scripts npm@11.6.2 # trusted publishing (OIDC) needs npm >= 11.5.1
       - run: pnpm install --frozen-lockfile
+      # « chore: version packages » opened with GITHUB_TOKEN starts no workflow (GitHub's rule): its required checks never ran and the
+      # train stopped (#13, #9, krizaka-internal#2263). A GitHub App installation token does start them (as krizaka-ts release.yml).
+      - id: app
+        if: ${{ vars.RELEASE_APP_ID != '' }}
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          app-id: ${{ vars.RELEASE_APP_ID }}
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
       - id: changesets
         uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2
         with:
           version-script: pnpm run version
           publish-script: pnpm run release
           pr-title: "chore: version packages"
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ steps.app.outputs.token || secrets.GITHUB_TOKEN }}
         env:
           NPM_CONFIG_PROVENANCE: "true"

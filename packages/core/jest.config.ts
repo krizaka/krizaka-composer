@@ -4,6 +4,11 @@ const config: Config = {
   preset: "ts-jest/presets/js-with-ts-esm", // TS + ESM
   testEnvironment: "jsdom",
 
+  // The lcov report the SonarCloud CI analysis reads (ci.yml sonar-coverage-paths).
+  collectCoverage: true,
+  coverageReporters: ["lcov", "text-summary"],
+  coverageDirectory: "coverage",
+
   // Treat these files as ESM so `import`/`export` keep working
   extensionsToTreatAsEsm: [".ts", ".tsx"],
 

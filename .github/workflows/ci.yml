@@ -31,5 +31,6 @@ jobs:
       build-script: build
       # SonarCloud CI analysis: the required "SonarCloud Code Analysis" must also report on merge_group, where the app's automatic analysis does not run (krizaka-internal#1904).
       sonar: true
+      sonar-coverage-paths: packages/core/coverage/lcov.info
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

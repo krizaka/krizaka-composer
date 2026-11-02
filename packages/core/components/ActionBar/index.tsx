@@ -1,6 +1,7 @@
 import { forwardRef, ReactNode, SyntheticEvent } from "react";
 import { GripVertical } from "lucide-react";
 import getClassNameFactory from "../../lib/get-class-name-factory";
+import { stopActivationKey } from "../../lib/keyboard";
 import styles from "./styles.module.css";
 const getClassName = getClassNameFactory("ActionBar", styles);
 const getActionClassName = getClassNameFactory("ActionBarAction", styles);
@@ -13,8 +14,8 @@ export const ActionBar = ({
   children?: ReactNode;
 }) => (
   <div
-    role="presentation"
     className={getClassName()}
+    onKeyDown={stopActivationKey}
     onClick={(e) => {
       e.stopPropagation();
     }}

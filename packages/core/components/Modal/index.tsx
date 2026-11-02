@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import getClassNameFactory from "../../lib/get-class-name-factory";
+import { stopActivationKey } from "../../lib/keyboard";
 import styles from "./styles.module.css";
 import { createPortal } from "react-dom";
 
@@ -26,14 +27,16 @@ export const Modal = ({
 
   return createPortal(
     <div
-      role="presentation"
       className={getClassName({ isOpen })}
       onClick={onClose}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") onClose();
+      }}
     >
       <div
-        role="presentation"
         className={getClassName("inner")}
         onClick={(e) => e.stopPropagation()}
+        onKeyDown={stopActivationKey}
       >
         {children}
       </div>

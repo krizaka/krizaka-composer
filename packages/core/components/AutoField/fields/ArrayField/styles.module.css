@@ -188,9 +188,35 @@
   border-bottom-right-radius: var(--_puck-field-array-radius-inner);
 }
 
-.ArrayFieldItem-summary:focus-visible {
+/* The native button carries the keyboard; its ::after stretches the click
+   over the whole row, the actions stay above it. */
+.ArrayFieldItem-toggle {
+  appearance: none;
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: inherit;
+  flex: 1;
+  font: inherit;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+  text-align: start;
+}
+
+.ArrayFieldItem-toggle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.ArrayFieldItem-toggle:focus-visible {
+  outline: none;
+}
+
+.ArrayFieldItem-toggle:focus-visible::after {
   outline: var(--puck-border-width-focus) solid var(--puck-color-focus-ring);
-  outline-offset: var(--puck-border-width-focus);
+  outline-offset: calc(-1 * var(--puck-border-width-focus));
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -257,6 +283,8 @@
 }
 
 .ArrayFieldItem-actions {
+  position: relative;
+  z-index: 1;
   color: var(--puck-color-text-secondary);
   display: flex;
   gap: var(--puck-space-1);

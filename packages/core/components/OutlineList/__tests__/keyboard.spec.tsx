@@ -4,29 +4,36 @@ import { OutlineList } from "..";
 
 jest.mock("../styles.module.css");
 
-// Sonar S1082: a clickable item answers the keyboard as it answers the pointer.
+// Sonar S1082, S6845: a clickable item is a native button, so the keyboard
+// reaches and operates it without a role or a tabindex.
 describe("OutlineList.Item keyboard", () => {
-  it("activates on Enter and Space, and is focusable", () => {
+  it("is a native button: focusable, and the browser turns Enter and Space into a click", () => {
     const onClick = jest.fn();
     render(
       <OutlineList>
         <OutlineList.Item onClick={onClick}>Heading</OutlineList.Item>
       </OutlineList>
     );
-    const item = screen.getByText("Heading");
-    expect(item).toHaveAttribute("tabindex", "0");
-    fireEvent.keyDown(item, { key: "Enter" });
-    fireEvent.keyDown(item, { key: " " });
-    fireEvent.keyDown(item, { key: "a" });
-    expect(onClick).toHaveBeenCalledTimes(2);
+    const button = screen.getByRole("button", { name: "Heading" });
+    expect(button.tagName).toBe("BUTTON");
+
+    expect(button).not.toHaveAttribute("tabindex");
+    expect(button).not.toBeDisabled();
+    button.focus();
+    expect(button).toHaveFocus();
+    fireEvent.click(button);
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  it("is not focusable without a handler", () => {
+  it("is not a control without a handler", () => {
     render(
       <OutlineList>
         <OutlineList.Item>Plain</OutlineList.Item>
       </OutlineList>
     );
-    expect(screen.getByText("Plain")).not.toHaveAttribute("tabindex");
+    expect(screen.queryByRole("button")).toBeNull();
+    expect(screen.getByText("Plain").closest("li")).not.toHaveAttribute(
+      "tabindex"
+    );
   });
 });

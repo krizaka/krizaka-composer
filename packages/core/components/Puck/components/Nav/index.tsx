@@ -31,21 +31,14 @@ export const MenuItem = ({
       })}
     >
       {onClick && (
-        <div
+        <button
+          type="button"
           className={getClassNameItem("link")}
-          role="button"
-          tabIndex={0}
           onClick={onClick}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              onClick();
-            }
-          }}
         >
           {icon && <span className={getClassNameItem("linkIcon")}>{icon}</span>}
           <span className={getClassNameItem("linkLabel")}>{label}</span>
-        </div>
+        </button>
       )}
     </li>
   );

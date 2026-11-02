@@ -9,6 +9,7 @@ import type { Data } from "../../types";
 import styles from "./styles.module.css";
 import { useAppStore } from "../../store";
 import { useMessage } from "../../lib/use-message";
+import { isEscapeOutsideTextEntry } from "../../lib/keyboard";
 
 const getClassName = getClassNameFactory("MenuBar", styles);
 
@@ -33,8 +34,12 @@ export function MenuBar<UserData extends Data>({
 
   return (
     <div
-      role="presentation"
       className={getClassName({ menuOpen })}
+      onKeyDown={(event) => {
+        if (menuOpen && isEscapeOutsideTextEntry(event)) {
+          setMenuOpen(false);
+        }
+      }}
       onClick={(event) => {
         const element = event.target as HTMLElement;
 

@@ -23,25 +23,18 @@ OutlineList.Item = ({
   onClick?: (e: SyntheticEvent) => void;
 }) => {
   return (
-    <li
-      className={getClassNameItem({ clickable: !!onClick })}
-      tabIndex={onClick ? 0 : undefined}
-      onClick={onClick}
-      onKeyDown={
-        onClick
-          ? (e) => {
-              if (
-                e.target === e.currentTarget &&
-                (e.key === "Enter" || e.key === " ")
-              ) {
-                e.preventDefault();
-                onClick(e);
-              }
-            }
-          : undefined
-      }
-    >
-      {children}
+    <li className={getClassNameItem({ clickable: !!onClick })}>
+      {onClick ? (
+        <button
+          type="button"
+          className={getClassNameItem("button")}
+          onClick={onClick}
+        >
+          {children}
+        </button>
+      ) : (
+        children
+      )}
     </li>
   );
 };

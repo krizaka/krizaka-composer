@@ -16,6 +16,7 @@ import { UiState } from "../../../../types";
 import { Loader } from "../../../Loader";
 import { useShallow } from "zustand/react/shallow";
 import { useCanvasFrame } from "../../../../lib/frame-context";
+import { isEscapeOutsideTextEntry } from "../../../../lib/keyboard";
 import { usePropsContext } from "../..";
 import { defaultViewports } from "../../../ViewportControls/default-viewports";
 
@@ -237,7 +238,15 @@ export const Canvas = () => {
 
   return (
     <div
-      role="presentation"
+      onKeyDown={(e) => {
+        if (isEscapeOutsideTextEntry(e)) {
+          dispatch({
+            type: "setUi",
+            ui: { itemSelector: null },
+            recordHistory: false,
+          });
+        }
+      }}
       className={getClassName({
         ready: status === "READY" || !iframe.enabled || !iframe.waitForStyles,
         showLoader,

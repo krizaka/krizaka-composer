@@ -128,39 +128,30 @@ const ArrayFieldItemInternal = ({
             noFields: !hasVisibleFields,
           })}
         >
-          <div
-            ref={handleRef}
-            role="button"
-            tabIndex={0}
-            aria-expanded={hasVisibleFields ? isExpanded : undefined}
-            onKeyDown={(e) => {
-              if (
-                e.target === e.currentTarget &&
-                (e.key === "Enter" || e.key === " ")
-              ) {
+          <div ref={handleRef} className={getClassNameItem("summary")}>
+            <button
+              type="button"
+              className={getClassNameItem("toggle")}
+              aria-expanded={hasVisibleFields ? isExpanded : undefined}
+              aria-disabled={!hasVisibleFields || undefined}
+              onClick={(e) => {
+                if (isDragging) return;
+
                 e.preventDefault();
-                if (isDragging || !hasVisibleFields) return;
+                e.stopPropagation();
+
+                if (!hasVisibleFields) return;
+
                 onToggleExpand(id, isExpanded);
-              }
-            }}
-            onClick={(e) => {
-              if (isDragging) return;
-
-              e.preventDefault();
-              e.stopPropagation();
-
-              if (!hasVisibleFields) return;
-
-              onToggleExpand(id, isExpanded);
-            }}
-            className={getClassNameItem("summary")}
-          >
-            <ItemSummary
-              index={index}
-              originalIndex={originalIndex}
-              field={field}
-              name={name}
-            />
+              }}
+            >
+              <ItemSummary
+                index={index}
+                originalIndex={originalIndex}
+                field={field}
+                name={name}
+              />
+            </button>
             <div className={getClassNameItem("rhs")}>
               {!readOnly && (
                 <div className={getClassNameItem("actions")}>{actions}</div>

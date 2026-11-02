@@ -31,10 +31,14 @@ export const MenuItem = ({
       })}
     >
       {onClick && (
-        <div className={getClassNameItem("link")} onClick={onClick}>
+        <button
+          type="button"
+          className={getClassNameItem("link")}
+          onClick={onClick}
+        >
           {icon && <span className={getClassNameItem("linkIcon")}>{icon}</span>}
           <span className={getClassNameItem("linkLabel")}>{label}</span>
-        </div>
+        </button>
       )}
     </li>
   );

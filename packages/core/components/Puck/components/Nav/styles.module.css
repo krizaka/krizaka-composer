@@ -37,6 +37,10 @@
 }
 
 .NavItem-link {
+  appearance: none;
+  background: none;
+  border: 0;
+  font: inherit;
   text-align: center;
   align-items: center;
   color: var(--puck-pluginbar-color-text, var(--puck-color-text-secondary));

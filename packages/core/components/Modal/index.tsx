@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import getClassNameFactory from "../../lib/get-class-name-factory";
+import { stopActivationKey } from "../../lib/keyboard";
 import styles from "./styles.module.css";
 import { createPortal } from "react-dom";
 
@@ -25,13 +26,26 @@ export const Modal = ({
   }
 
   return createPortal(
-    <div className={getClassName({ isOpen })} onClick={onClose}>
-      <div
-        className={getClassName("inner")}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {children}
-      </div>
+    <div
+      className={getClassName({ isOpen })}
+      onClick={(e) => {
+        // A click on the backdrop closes; a click inside stops here (the
+        // portal would otherwise bubble it to the React parents).
+        if (e.target === e.currentTarget) {
+          onClose();
+        } else {
+          e.stopPropagation();
+        }
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") {
+          onClose();
+        } else {
+          stopActivationKey(e);
+        }
+      }}
+    >
+      <div className={getClassName("inner")}>{children}</div>
     </div>,
     rootEl
   );

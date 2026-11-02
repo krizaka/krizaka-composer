@@ -54,8 +54,6 @@
   background: var(--puck-color-surface-muted);
   border: var(--puck-border-width-regular) solid var(--puck-color-border);
   border-radius: var(--puck-radius-pill);
-  margin-left: none;
-  margin-right: none;
   padding-right: 42px;
 }
 

@@ -3,6 +3,7 @@ import { RefObject, useEffect, useRef, useMemo } from "react";
 import { useAppStore } from "../../../../store";
 import { getClassNameFactory } from "../../../../lib";
 import { BubbledPointerEvent } from "../../../../lib/bubble-pointer-event";
+import { isEscapeOutsideTextEntry } from "../../../../lib/keyboard";
 
 import AutoFrame, { autoFrameContext } from "../../../AutoFrame";
 
@@ -108,6 +109,11 @@ export const Preview = ({ id = "puck-preview" }: { id?: string }) => {
       className={getClassName()}
       id={id}
       data-puck-preview
+      onKeyDown={(e) => {
+        if (isEscapeOutsideTextEntry(e)) {
+          dispatch({ type: "setUi", ui: { itemSelector: null } });
+        }
+      }}
       onClick={(e) => {
         const el = e.target as Element;
 

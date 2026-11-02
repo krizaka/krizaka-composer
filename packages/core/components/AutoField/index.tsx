@@ -1,4 +1,5 @@
 import getClassNameFactory from "../../lib/get-class-name-factory";
+import { stopActivationKey } from "../../lib/keyboard";
 import { Field, FieldProps, UiState } from "../../types";
 
 import styles from "./styles.module.css";
@@ -231,6 +232,7 @@ function AutoFieldInternal<
         }
         onFocus={onFocus}
         onBlur={onBlur}
+        onKeyDown={stopActivationKey}
         onClick={(e) => {
           // Prevent propagation of any click events to parent field.
           // For example, a field within an array may bubble an event

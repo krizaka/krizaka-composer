@@ -44,24 +44,32 @@
   right: -17px;
 }
 
-.OutlineListItem--clickable {
+.OutlineListItem-button {
+  appearance: none;
+  background: none;
+  border: 0;
+  color: inherit;
   cursor: pointer;
+  font: inherit;
+  margin: 0;
+  padding: 0;
+  text-align: start;
   transition: color var(--puck-duration-fast) var(--puck-ease-exit);
 }
 
-.OutlineListItem--clickable:focus-visible {
+.OutlineListItem-button:focus-visible {
   outline: var(--puck-border-width-focus) solid var(--puck-color-focus-ring);
   outline-offset: var(--puck-border-width-focus);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .OutlineListItem--clickable:hover {
+  .OutlineListItem-button:hover {
     color: var(--puck-color-interactive);
     transition: none;
   }
 }
 
-.OutlineListItem--clickable:active {
+.OutlineListItem-button:active {
   color: var(--puck-color-interactive-hover);
   transition: none;
 }

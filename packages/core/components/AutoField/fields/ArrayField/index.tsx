@@ -128,26 +128,30 @@ const ArrayFieldItemInternal = ({
             noFields: !hasVisibleFields,
           })}
         >
-          <div
-            ref={handleRef}
-            onClick={(e) => {
-              if (isDragging) return;
+          <div ref={handleRef} className={getClassNameItem("summary")}>
+            <button
+              type="button"
+              className={getClassNameItem("toggle")}
+              aria-expanded={hasVisibleFields ? isExpanded : undefined}
+              aria-disabled={!hasVisibleFields || undefined}
+              onClick={(e) => {
+                if (isDragging) return;
 
-              e.preventDefault();
-              e.stopPropagation();
+                e.preventDefault();
+                e.stopPropagation();
 
-              if (!hasVisibleFields) return;
+                if (!hasVisibleFields) return;
 
-              onToggleExpand(id, isExpanded);
-            }}
-            className={getClassNameItem("summary")}
-          >
-            <ItemSummary
-              index={index}
-              originalIndex={originalIndex}
-              field={field}
-              name={name}
-            />
+                onToggleExpand(id, isExpanded);
+              }}
+            >
+              <ItemSummary
+                index={index}
+                originalIndex={originalIndex}
+                field={field}
+                name={name}
+              />
+            </button>
             <div className={getClassNameItem("rhs")}>
               {!readOnly && (
                 <div className={getClassNameItem("actions")}>{actions}</div>

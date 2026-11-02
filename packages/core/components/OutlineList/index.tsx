@@ -23,11 +23,18 @@ OutlineList.Item = ({
   onClick?: (e: SyntheticEvent) => void;
 }) => {
   return (
-    <li
-      className={getClassNameItem({ clickable: !!onClick })}
-      onClick={onClick}
-    >
-      {children}
+    <li className={getClassNameItem({ clickable: !!onClick })}>
+      {onClick ? (
+        <button
+          type="button"
+          className={getClassNameItem("button")}
+          onClick={onClick}
+        >
+          {children}
+        </button>
+      ) : (
+        children
+      )}
     </li>
   );
 };

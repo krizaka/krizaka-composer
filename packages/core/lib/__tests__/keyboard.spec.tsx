@@ -67,6 +67,8 @@ describe("keyboard", () => {
     expect(onClose).toHaveBeenCalledTimes(1);
     fireEvent.click(inside);
     expect(onClose).toHaveBeenCalledTimes(1);
+    fireEvent.click(root.firstElementChild as Element);
+    expect(onClose).toHaveBeenCalledTimes(2);
     root.remove();
   });
 

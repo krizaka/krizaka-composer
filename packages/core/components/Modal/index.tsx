@@ -28,18 +28,24 @@ export const Modal = ({
   return createPortal(
     <div
       className={getClassName({ isOpen })}
-      onClick={onClose}
+      onClick={(e) => {
+        // A click on the backdrop closes; a click inside stops here (the
+        // portal would otherwise bubble it to the React parents).
+        if (e.target === e.currentTarget) {
+          onClose();
+        } else {
+          e.stopPropagation();
+        }
+      }}
       onKeyDown={(e) => {
-        if (e.key === "Escape") onClose();
+        if (e.key === "Escape") {
+          onClose();
+        } else {
+          stopActivationKey(e);
+        }
       }}
     >
-      <div
-        className={getClassName("inner")}
-        onClick={(e) => e.stopPropagation()}
-        onKeyDown={stopActivationKey}
-      >
-        {children}
-      </div>
+      <div className={getClassName("inner")}>{children}</div>
     </div>,
     rootEl
   );

@@ -1,6 +1,6 @@
 {
   "name": "@krizaka/composer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Krizaka Composer: the visual page editor of the Krizaka family and its document format (a fork of Puck)",
   "author": "Krizaka",
   "repository": {

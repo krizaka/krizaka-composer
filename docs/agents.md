@@ -1,6 +1,6 @@
 # krizaka-composer in detail
 
-The Krizaka fork of Puck (akinaza ADR-010, amended 2026-10-31). Read this before touching the code.
+The Krizaka fork of Puck (folioviv ADR-010, amended 2026-10-31). Read this before touching the code.
 
 ## Upstream
 

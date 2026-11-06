@@ -13,7 +13,7 @@ and bindings; an editor in French and English; Krizaka's tokens and `@krizaka/ui
 | Document     | `@krizaka/composer/document`: the versioned `ComposerDocument` (schema 2), validated with zod, no React, runs on a server.                     |
 | Upstream     | `puckeditor/puck`, tracked as the `upstream` remote: security and bug fixes are cherry-picked, generic fixes are proposed back from this fork. |
 | Licence      | MIT. Puck's [LICENSE](LICENSE) is kept unchanged; see [NOTICE](NOTICE).                                                                        |
-| Used by      | [Akinaza](https://github.com/krizaka/akinaza)'s shop editor (Boutique › Page).                                                                 |
+| Used by      | [Folioviv](https://github.com/krizaka/folioviv)'s shop editor (Boutique › Page).                                                               |
 | Contributing | [AGENTS.md](AGENTS.md) and [docs/agents.md](docs/agents.md); the org's standards in [krizaka/.github](https://github.com/krizaka/.github).     |
 
 ## The document

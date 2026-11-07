@@ -60,3 +60,18 @@ than the code knows is refused. Puck's saved data is read once with `fromPuckDat
 
 Dropped from the upstream fork: rich text (TipTap), external fields, `create-puck-app`, the Contentful and emotion
 plugins, the heading analyzer, the demo and docs apps and the recipes.
+
+<!-- krizaka:workflows:start -->
+
+## Workflows
+
+What runs in the Actions tab of this repository.
+
+- **CI** (`ci.yml`): Lint, tests and build of the repository. Runs on push, on every pull request, in the merge queue.
+- **Dependabot auto-merge** (`dependabot-automerge.yml`): Auto-merges safe Dependabot updates. Runs on every pull request.
+- **Merge resolution** (`merge-resolution.yml`): Fails a PR that drops what main added without a deletion-explained line. Runs on every pull request.
+- **Release notes** (`release-notes.yml`): Writes the release notes. Runs on push.
+- **Release** (`release.yml`): Versions and publishes the packages (Changesets). Runs on push, on demand.
+- **Scorecard** (`scorecard.yml`): OpenSSF Scorecard of the repository. Runs when branch rules change, on a schedule, on demand.
+- **Security scan** (`security.yml`): Secret scan (gitleaks) and workflow scan (zizmor); both are required checks. Runs on every pull request, in the merge queue, on push.
+<!-- krizaka:workflows:end -->

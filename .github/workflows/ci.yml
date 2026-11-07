@@ -19,7 +19,7 @@ jobs:
   # pnpm cache, the legs, the timeouts and the gate that always reports live there. This file says only what is Krizaka
   # Composer's: Puck's own scripts (turbo) for lint, format, tests and build.
   ci:
-    uses: krizaka/.github/.github/workflows/node-ci.yml@79f6ff6292edefebc59fc968dbc2c203da81c3ea # main (merge queue, layout guard)
+    uses: krizaka/.github/.github/workflows/node-ci.yml@c8426ee46246cbdd3fbfc7c9f1c6ca4b447aa368 # main (merge queue, layout guard)
     permissions:
       contents: read
     with:
